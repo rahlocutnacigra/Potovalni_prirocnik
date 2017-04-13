@@ -1,4 +1,4 @@
 # Potovalni priročnik
 
-![ER](/potovanje2.png)
+![ER](/potovanje3.png)
 
