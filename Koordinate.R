@@ -30,3 +30,5 @@ locations <- ldply(address, function(x) geoCode(paste(x, "Slovenia")))
 locations$V5<-mesta
 names(locations) <- c("lat","lon","location_type", "forAddress","kraj")
 kraji_geo <- data.frame(locations$kraj,locations$lat,locations$lon)
+
+#write.csv(kraji_geo,"Koordinate-SLO.csv",row.names=FALSE)
