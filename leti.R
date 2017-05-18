@@ -8,7 +8,6 @@ naslovi<-c("http://www.edreams.com/offers/flights/airline/FR/ryanair/",
            "http://www.edreams.com/offers/flights/airline/IB/iberia/",
            "http://www.edreams.com/offers/flights/airline/BA/british-airways/",
            "http://www.edreams.com/offers/flights/airline/DY/norwegian-air-shuttle/",
-           "http://www.edreams.com/offers/flights/airline/D8/norwegian-air-international/",
            "http://www.edreams.com/offers/flights/airline/VY/vueling/",
            "http://www.edreams.com/offers/flights/airline/A3/aegean-airlines/",
            "http://www.edreams.com/offers/flights/airline/PC/pegasus-airlines/",
@@ -76,4 +75,9 @@ for (url in naslovi){
 
 mat1 <- A %>% na.omit() %>% as.vector() %>% strapplyc(paste0("^(.*) ", z, " (.*)€([0-9]+)")) %>% data.frame() %>% t()
 
+
+
+razdeli<- strsplit("http://www.edreams.com/offers/flights/airline/FR/ryanair/", split = "/")
+n<-length(razdeli[[1]])
+razdeli[[1]][n]
 
