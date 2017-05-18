@@ -69,15 +69,28 @@ for (url in naslovi){
   urldata <- getURL(url)
   data <- readHTMLTable(urldata,stringsAsFactors = FALSE)
   for (i in data){
-    A<-c(A,i$V1,i$V2)
+   # sk[i]<-c(i$V1,i$V2)  #to ne dela
+  #  sk[i]<-na.omit(sk)
+   # for (j in sk){
+     # j<-gsub(",","",j)
+    #  }
+    razdeli<- strsplit(url, split = "/")
+    n<-length(razdeli[[1]])
+    prevoznik<-razdeli[[1]][n]
+    b<-paste0(prevoznik,"/",sk)
+   # c<-paste0(prevoznik,"/",i$V2)
+    A<-c(A,b)
   }
 }
 
-mat1 <- A %>% na.omit() %>% as.vector() %>% strapplyc(paste0("^(.*) ", z, " (.*)€([0-9]+)")) %>% data.frame() %>% t()
+mat1 <- A  %>% strapplyc(paste0("^(.*)/(.*) ",z, " (.*)€([0-9]+)")) %>% data.frame() %>% t()
 
 
 
+
+mat1
 razdeli<- strsplit("http://www.edreams.com/offers/flights/airline/FR/ryanair/", split = "/")
 n<-length(razdeli[[1]])
 razdeli[[1]][n]
+
 
