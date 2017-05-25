@@ -92,6 +92,13 @@ letalisca<-unique(letalisca)
 
 
 locations1 <- ldply(letalisca, function(x) geoCode(x))
-locations1$V5<-mesta
-names(locations1) <- c("lat","lon","location_type", "forAddress","kraj")
+names(locations1) <- c("lat","lon","location_type", "forAddress")
 kraji_geo1 <- data.frame(locations1$kraj,locations1$lat,locations1$lon)
+#Nov del kode
+library(RgoogleMaps)
+letkoor<-ldply(letalisca, function(x) getGeoCode(x, JSON = TRUE))
+letkoor2<-ldply(letalisca, function(x) getGeoCode(x, JSON = TRUE))
+letkoor$V5<-letalisca
+letkoor2$V5<-letalisca
+k<-join(letkoor,letkoor2,by=NULL,type="inner") #to nama ne dela
+
