@@ -87,3 +87,11 @@ mat1 <- gsub(". stops?$", "", A)  %>% strapplyc(paste0("^(.*)/(.*) ",z, " (.*)â‚
 rownames(mat1) <- NULL
 colnames(mat1)<-c("Ponudnik","Odhod","Prihod","Cena" )
 
+letalisca<-c(mat1[,2],mat1[,3])
+letalisca<-unique(letalisca)
+
+
+locations1 <- ldply(letalisca, function(x) geoCode(x))
+locations1$V5<-mesta
+names(locations1) <- c("lat","lon","location_type", "forAddress","kraj")
+kraji_geo1 <- data.frame(locations1$kraj,locations1$lat,locations1$lon)
