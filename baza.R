@@ -6,7 +6,8 @@ library(RPostgreSQL)
 library(shiny)
 
 
-source("leti.R") #kaj je source??
+source("leti.R") #kaj je source? Source požene ta file, ki ga daš v argument. Torej da lah odpreš samo 
+                # bazo in ne rabiš vsakič pred tem pognat vseh možnih programov.
 
 
 delete_table <- function(){

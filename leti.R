@@ -87,6 +87,7 @@ for (url in naslovi){
 mat1 <- gsub(". stops?$", "", A)  %>% strapplyc(paste0("^(.*)/(.*) ",z, " (.*)€([0-9]+)")) %>% data.frame() %>% t()
 rownames(mat1) <- NULL
 colnames(mat1)<-c("Ponudnik","Odhod","Prihod","Cena" )
+tab_let<-data.frame(mat1)
 
 letalisca<-c(mat1[,2],mat1[,3])
 letalisca<-unique(letalisca)

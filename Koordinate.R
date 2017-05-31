@@ -18,7 +18,7 @@ letkoor <- ldply(letalisca, function(x) getGeoCode(x))
 letkoor$v3<-letalisca
 names(letkoor) <- c("lat","lon","kraj")
 
-rezultati<-c()
+
 letalisca1<-letalisca
 for (i in 1:10){
   rezultati<-c()
@@ -43,7 +43,9 @@ for (i in 1:10){
   }
   letalisca1<-rezultati
 }
-
+koor_leti <- letkoor[ !(is.na(letkoor$lat)),]
+tab_let<-tab_let[ !(tab_let$Odhod) %in% rezultati,]
+tab_let<-tab_let[ !(tab_let$Prihod) %in% rezultati,]
   
 # letkoor<-ldply(letalisca, function(x) getGeoCode(x))
 # letkoor2<-ldply(letalisca, function(x) getGeoCode(x))
