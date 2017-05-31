@@ -1,5 +1,6 @@
 library(XML)
 library(gsubfn)
+source("Mesta.R")
 #Podatki o letih
 naslovi<-c("http://www.edreams.com/offers/flights/airline/FR/ryanair/",
            "http://www.edreams.com/offers/flights/airline/W6/wizz-air/",
@@ -89,12 +90,8 @@ colnames(mat1)<-c("Ponudnik","Odhod","Prihod","Cena" )
 
 letalisca<-c(mat1[,2],mat1[,3])
 letalisca<-unique(letalisca)
-letalisca[142]<-"Mugla Dalaman"
 
 
-locations1 <- ldply(letalisca, function(x) geoCode(x))
-names(locations1) <- c("lat","lon","location_type", "forAddress")
-kraji_geo1 <- data.frame(locations1$kraj,locations1$lat,locations1$lon)
 
 #Nov del kode
 #install.packages("RgoogleMaps")
