@@ -1,3 +1,5 @@
+#Iz wikipedije vzame tabelo vseh slovenskih mest
+
 library(XML)
 library(RCurl)
 require(dplyr)

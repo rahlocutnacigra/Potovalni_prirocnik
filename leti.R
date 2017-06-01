@@ -1,3 +1,6 @@
+#naredi tabelo letalski ponudnik, odhod, prihod in cena leta
+#naredi vektor vseh letališč
+
 library(XML)
 library(gsubfn)
 source("Mesta.R")

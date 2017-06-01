@@ -4,6 +4,8 @@ library(plyr)
 library(RgoogleMaps)
 source("leti.R")
 
+##naredi tabelo, ki slovenskim mestom doda stolpca s koordinatami
+
 # Uporabimo funkcijo getGeoCode iz knjižnice RgoogleMaps
 address <- mesta
 locations <- ldply(address, function(x) getGeoCode(paste(x, "Slovenia")))
@@ -13,7 +15,7 @@ kraji_geo <- data.frame(locations$kraj,locations$lat,locations$lon)
 
 #write.csv(kraji_geo,"Koordinate-SLO.csv",row.names=FALSE)
 
-
+##tabela ki letališčem doda koordinate
 letkoor <- ldply(letalisca, function(x) getGeoCode(x))
 letkoor$v3<-letalisca
 names(letkoor) <- c("lat","lon","kraj")
