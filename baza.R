@@ -122,6 +122,12 @@ create_table <- function(){
                                     Odhod TEXT NOT NULL,
                                     Prihod TEXT NOT NULL,
                                     Cena NUMERIC NOT NULL)"))
+   
+  letalisca_koordinate<- dbSendQuery(conn,build_sql("CREATE TABLE letalisca_koordinate (
+
+                              letalisce TEXT NOT NULL,
+                              sirina NUMERIC NOT NULL,
+                              dolzina NUMERIC NOT NULL)"))
     
     dbSendQuery(conn, build_sql('GRANT SELECT ON ALL TABLES IN SCHEMA public TO javnost'))
     
@@ -149,6 +155,7 @@ insert_data <- function(){
     
     dbWriteTable(conn, name="slo_mesta_koordinate",slo_mesta_koordinate,append=T, row.names=FALSE)
     dbWriteTable(conn, name="leti",tab_let,append=T, row.names=FALSE)
+    dbWriteTable(conn, name="letalisca_koordinate",koor_leti,append=T, row.names=FALSE)
     
   }, finally = {
     dbDisconnect(conn) 
