@@ -175,6 +175,11 @@ pravice <- function() {
     dbSendQuery(conn, "GRANT CREATE ON SCHEMA public TO mancac")
     dbSendQuery(conn, "GRANT CREATE ON SCHEMA public TO laral")
     
+    dbSendQuery(conn, paste("GRANT CONNECT ON DATABASE", db, "TO laral"))
+    dbSendQuery(conn, "GRANT CONNECT ON DATABASE sem2017_mancac TO mancac")
+    dbSendQuery(conn, "GRANT ALL ON ALL TABLES IN SCHEMA public TO mancac")
+    dbSendQuery(conn, "GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO mancac")
+    
   }, finally = {
     dbDisconnect(conn) 
     
