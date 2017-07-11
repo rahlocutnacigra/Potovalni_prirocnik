@@ -1,4 +1,4 @@
-earth.dist <- function (long1, lat1, long2, lat2)
+earth.dist <- function (lat1, long1, lat2, long2)
 {
   rad <- pi/180
   a1 <- lat1 * rad
@@ -14,4 +14,4 @@ earth.dist <- function (long1, lat1, long2, lat2)
   return(d)
 }
 
-eart.dist()
+

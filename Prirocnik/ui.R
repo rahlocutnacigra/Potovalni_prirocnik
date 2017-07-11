@@ -2,21 +2,36 @@ library(shiny)
 library(dplyr)
 library(RPostgreSQL)
 library(datasets)
+
+if ("server.R" %in% dir()) {
+  setwd("U:/Potovalni_prirocnik")
+}
+source("Potovalni_prirocnik/auth.R")
+conn <- src_postgres(dbname = db, host = host,
+                     user = user, password = password)
+letalisca <- (tbl(conn, "letalisca_koordinate"))
+leti <-(tbl(conn, "leti"))
+slo_mesta <-(tbl(conn, "slo_mesta_koordinate"))
+mesta<-data.frame(slo_mesta)
+Encoding(mesta$mesto) <- "UTF-8"
+let<-data.frame(letalisca)
+
 shinyUI(fluidPage(
   titlePanel("Potovalni priročnik"),
   sidebarLayout(
     sidebarPanel(
-      textInput(inputId="kraj",label = 'Od kje boste potovali?'),
-      selectInput(inputId="destiacija", label = "Kam bi radi potovali?", mesta),
+      selectInput(inputId="odhod", label = "od kje boste potovali?", mesta$mesto),
+    submitButton(),
+      selectInput(inputId="destinacija", label="Kam želite potovati?",let$letalisce),
       submitButton()
     ),
     sidebarPanel(
-      sliderInput(inputId="kilometri", label= "Koliko kilometrov ste pripraljeni narediti do letališča?", 
-                  value = 200, min =0, max = 500),
-      sliderInput(inputId="cena", label="Kolikšna je navišja cena, ki ste jo pripravljeni plačati?",
-                  value = 500, min = 50, max = 4000)
-      )
+      sliderInput(inputId="kilometri", label= "Koliko kilometrov ste pripraljeni narediti do letališča?",
+                  value = 200, min =0, max = 500)),
+    # sidebarPanel(
+    #   tableOutput("a")
+    #   )
     )
-    
+
     )
   )

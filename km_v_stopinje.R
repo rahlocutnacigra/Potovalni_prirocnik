@@ -13,3 +13,9 @@ input <- 100
 Lat <-  input/110.54
 Lon <- input/(111.320*cos(Lat))
 
+pretvornik<-function(km){
+  Lat <-  km/110.54
+  Lon <- km/(111.320*cos(Lat))
+  c(Lat, Lon)
+}
+pretvornik(82.65)
