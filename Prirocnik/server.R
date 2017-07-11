@@ -3,7 +3,20 @@ library(dplyr)
 library(RPostgreSQL)
 library(datasets)
 
-source("../auth.R")
+source("../auth.r")
+
+if ("server.R" %in% dir()) {
+  setwd("..")
+}
+source("auth_public.R",encoding='UTF-8')
+
+
+shinyServer(function(input,output){
+  conn <- src_postgres(dbname = db, host = host,
+                       user = user, password = password)
+
+
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
