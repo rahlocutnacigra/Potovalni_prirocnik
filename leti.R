@@ -94,3 +94,4 @@ tab_let<-data.frame(mat1)
 
 letalisca<-c(mat1[,2],mat1[,3])
 letalisca<-unique(letalisca)
+

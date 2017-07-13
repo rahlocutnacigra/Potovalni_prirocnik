@@ -41,7 +41,7 @@ create_table <- function(){
     #Glavne tabele:
     
     slo_mesta_koordinate <- dbSendQuery(conn,build_sql("CREATE TABLE slo_mesta_koordinate (
-                                             mesto TEXT PRIMARY KEY,
+                                             mesto TEXT NOT NULL,
                                              sirina NUMERIC NOT NULL,
                                              dolzina NUMERIC NOT NULL)"))
 
@@ -92,6 +92,18 @@ insert_data <- function(){
   })
 }
 
+add_primary <- function(){
+  tryCatch({
+    conn <- dbConnect(drv, dbname = db, host = host,
+                      user = user, password = password)
+    dbSendQuery(conn,build_sql("ALTER TABLE slo_mesta_koordiante ADD COLUMN id SERIAL PRIMARY KEY"))
+    
+  }, finally = {
+    dbDisconnect(conn) 
+    
+  })
+}
+
 pravice <- function() {
   tryCatch({
     conn <- dbConnect(drv, dbname = db, host = host,
@@ -108,8 +120,10 @@ pravice <- function() {
     dbSendQuery(conn, "GRANT CONNECT ON DATABASE sem2017_mancac TO mancac")
     dbSendQuery(conn, "GRANT ALL ON ALL TABLES IN SCHEMA public TO mancac")
     dbSendQuery(conn, "GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO mancac")
-    
-  }, finally = {
+    dbSendQuery(conn, paste("GRANT CONNECT ON DATABASE", db, "TO javnost"))
+    dbSendQuery(conn, "GRANT SELECT ON ALL TABLES IN SCHEMA public TO javnost")
+  }, 
+  finally = {
     dbDisconnect(conn) 
     
   })
@@ -118,5 +132,6 @@ pravice <- function() {
 delete_table()
 create_table()
 insert_data()
-
+add_primary()
+pravice()
 con <- src_postgres(dbname = db, host = host, user = user, password = password)
