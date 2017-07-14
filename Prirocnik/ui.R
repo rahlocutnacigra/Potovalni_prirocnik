@@ -23,7 +23,5 @@ shinyUI(fluidPage(
   ),
   mainPanel(
     tableOutput("mozni.leti")
-  ),
-  mainPanel(
-    tableOutput("link")
-  )))
+  )
+  ))

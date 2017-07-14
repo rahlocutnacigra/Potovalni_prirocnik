@@ -20,6 +20,7 @@ delete_table <- function(){
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS slo_mesta_koordinate"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS leti"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS letalisca_koordinate"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS url"))
     
     
   }, finally = {
@@ -57,6 +58,11 @@ create_table <- function(){
                               letalisce TEXT NOT NULL,
                               sirina NUMERIC NOT NULL,
                               dolzina NUMERIC NOT NULL)"))
+  
+  url_tabela<- dbSendQuery(conn,build_sql("CREATE TABLE url_tabela (
+
+                                                    prevoznik TEXT UNIQUE,
+                                                    url TEXT NOT NULL)"))
     
     dbSendQuery(conn, build_sql('GRANT SELECT ON ALL TABLES IN SCHEMA public TO javnost'))
     
@@ -85,6 +91,7 @@ insert_data <- function(){
     dbWriteTable(conn, name="slo_mesta_koordinate",slo_mesta_koordinate,append=T, row.names=FALSE)
     dbWriteTable(conn, name="leti",tab_let,append=T, row.names=FALSE)
     dbWriteTable(conn, name="letalisca_koordinate",koor_leti,append=T, row.names=FALSE)
+    dbWriteTable(conn, name="url_tabela",tab_url,append=T, row.names=FALSE)
     
   }, finally = {
     dbDisconnect(conn) 

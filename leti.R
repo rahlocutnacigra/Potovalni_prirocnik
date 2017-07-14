@@ -95,3 +95,17 @@ tab_let<-data.frame(mat1)
 letalisca<-c(mat1[,2],mat1[,3])
 letalisca<-unique(letalisca)
 
+link<-c()
+for (i in naslovi){
+  razdeli<- strsplit(i, split = "/")
+  n<-length(razdeli[[1]])
+  prevoznik<-razdeli[[1]][n]
+  link1<-paste(prevoznik,"!",i)
+  link<-c(link,link1)
+}
+linki<-link %>% strapplyc("^(.*)!(.*)") %>% data.frame() %>% t()
+rownames(linki) <- NULL
+colnames(linki)<-c("Prevoznik","URL" )
+tab_url<-data.frame(linki)
+tab_url<-subset(tab_url, !duplicated(tab_url[,1]))
+
