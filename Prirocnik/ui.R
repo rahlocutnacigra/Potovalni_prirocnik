@@ -19,11 +19,17 @@ shinyUI(fluidPage(
                   value = 200, min =10, max = 500)
     ),
   sidebarPanel(
-    uiOutput("izbira")
+    uiOutput("izbira"),
+    radioButtons(inputId="ponudnik", label="Izberi ponudnika:", c("Najcenejši ponudnik", "Izberi drugega ponudnika"))
   ),
   mainPanel(
-    tableOutput("mozni.leti")
+    htmlOutput("naslov"),
+    htmlOutput("cena"),
+    htmlOutput("krajodhoda"),
+    htmlOutput("ponudnik")
   ),
   mainPanel(
-    tableOutput("link")
+    tableOutput("mozni.leti"),
+    tableOutput("krneki"),
+    textOutput("link")
   )))

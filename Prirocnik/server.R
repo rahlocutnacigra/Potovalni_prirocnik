@@ -28,8 +28,8 @@ shinyServer(function(input,output){
   dobi_omejitve<-function(kraj,km){
     a<-slo_mesta %>% filter(mesto == kraj) %>% data.frame()
     lat<-c(a$sirina + pretvornik(km)[1],a$sirina - pretvornik(km)[1])
-    lon<-c(a$dolzina + pretvornik(km)[2],a$dolzina - pretvornik(km)[2])
-    c(lat,lon)
+    # lon<-c(a$dolzina + pretvornik(km)[2],a$dolzina - pretvornik(km)[2])
+    c(lat)
   }
   primerna_letalisca<-function(kraj,km){
     b<-max(dobi_omejitve(kraj,km)[1],dobi_omejitve(kraj,km)[2])
@@ -49,7 +49,18 @@ shinyServer(function(input,output){
   poisci_let<-function(kraj,km,destinacija){
     a<-mozne_destinacije(kraj,km) %>% filter(prihod == destinacija)
   }
+  najugodnejsi.let<-function(kraj, km, destinacija){
+    a<-poisci_let(kraj,km,destinacija)
+    b<-filter(a,cena==min(a$cena))
+  }
   output$mozni.leti<-renderTable({poisci_let(input$odhod, input$kilometri, input$destinacija)})
+  
+  output$naslov<-renderUI({HTML("<b> <body bgcolor='#cce6ff'> <h3> <font color='#660033'> Najcenejši let: </font> </h3> </body> </b>")})
+  output$cena<-renderUI({HTML(paste0("<b>Cena:  </b>", najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)$cena[1]," €"))})
+  output$krajodhoda<-renderUI({HTML(paste0("<b>Kraj odhoda:  </b>", najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)$odhod[1]))})
+  output$ponudnik<-renderUI({HTML(paste0("<b>Ponudnik:  </b>", najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)$ponudnik[1]))})
+  
+  output$krneki<-renderTable({najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)})
   output$link <-renderText({"http://www.edreams.com/offers/flights"})
   })
 
