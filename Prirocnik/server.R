@@ -41,8 +41,15 @@ shinyServer(function(input,output){
                             & dolzina < d
                             & dolzina > e) %>%data.frame()
   }
-  output$stop<-renderText({as.character(primerna_letalisca(input$odhod,input$kilometri)$letalisce)})
-  
+  mozne_destinacije<-function(kraj,km){
+    a<-primerna_letalisca(kraj,km)$letalisce
+    pr.leti<-subset(data.frame(leti), data.frame(leti)$odhod %in% a)
+  }
+  output$izbira<-renderUI({selectInput(inputId="destinacija", label="Izberi destinacijo",unique(mozne_destinacije(input$odhod,input$kilometri)$prihod))})
+  poisci_let<-function(kraj,km,destinacija){
+    a<-mozne_destinacije(kraj,km) %>% filter(prihod == destinacija)
+  }
+  output$mozni.leti<-renderTable({poisci_let(input$odhod, input$kilometri, input$destinacija)})
   })
 
 

@@ -16,9 +16,12 @@ shinyUI(fluidPage(
     ),
   sidebarPanel(
       sliderInput(inputId="kilometri", label= "Koliko kilometrov ste pripraljeni narediti do letališča?",
-                  value = 200, min =0, max = 500)
+                  value = 200, min =10, max = 500)
     ),
   sidebarPanel(
-    textOutput("stop")
+    uiOutput("izbira")
+  ),
+  mainPanel(
+    tableOutput("mozni.leti")
   )
   ))
