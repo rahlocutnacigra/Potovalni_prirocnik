@@ -2,7 +2,7 @@ library(shiny)
 library(dplyr)
 library(RPostgreSQL)
 library(datasets)
-library(chron)
+#library(chron)
 
 
 
@@ -50,6 +50,7 @@ shinyServer(function(input,output){
     a<-mozne_destinacije(kraj,km) %>% filter(prihod == destinacija)
   }
   output$mozni.leti<-renderTable({poisci_let(input$odhod, input$kilometri, input$destinacija)})
+  output$link <-renderText({"http://www.edreams.com/offers/flights"})
   })
 
 
