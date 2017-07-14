@@ -25,7 +25,23 @@ shinyServer(function(input,output){
     Lon <- km/(111.320*cos(Lat))
     c(Lat, Lon)
   }
-  # pretvornik(input$kilometri)
+  dobi_omejitve<-function(kraj,km){
+    a<-slo_mesta %>% filter(mesto == kraj) %>% data.frame()
+    lat<-c(a$sirina + pretvornik(km)[1],a$sirina - pretvornik(km)[1])
+    lon<-c(a$dolzina + pretvornik(km)[2],a$dolzina - pretvornik(km)[2])
+    c(lat,lon)
+  }
+  primerna_letalisca<-function(kraj,km){
+    b<-max(dobi_omejitve(kraj,km)[1],dobi_omejitve(kraj,km)[2])
+    c<-min(dobi_omejitve(kraj,km)[1],dobi_omejitve(kraj,km)[2])
+    d<-max(dobi_omejitve(kraj,km)[3],dobi_omejitve(kraj,km)[4])
+    e<-min(dobi_omejitve(kraj,km)[3],dobi_omejitve(kraj,km)[4])
+    a<-letalisca %>% filter(sirina < b
+                            & sirina > c
+                            & dolzina < d
+                            & dolzina > e) %>%data.frame()
+  }
+  output$stop<-renderText({as.character(primerna_letalisca(input$odhod,input$kilometri)$letalisce)})
   
   })
 
