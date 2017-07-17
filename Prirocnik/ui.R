@@ -16,11 +16,12 @@ shinyUI(fluidPage(
   ),
   sidebarPanel(
     sliderInput(inputId="kilometri", label= "Koliko kilometrov ste pripraljeni narediti do letališča?",
-                value = 200, min =10, max = 500)
+                value = 200, min =10, max = 500),
+    actionButton("goButton", "Najdi lete!")
   ),
   sidebarPanel(
     uiOutput("izbira"),
-    radioButtons(inputId="ponudnik", label="Izberi ponudnika:", c("Najcenejši ponudnik", "Izberi drugega ponudnika"))
+    radioButtons(inputId="ponudnik", label="Izberi ponudnika:", c("Najcenejši ponudnik"="najcenejsi", "Izbiraj med ponudniki"="ostali"))
   ),
   mainPanel(
     htmlOutput("naslov"),
