@@ -26,10 +26,9 @@ shinyUI(fluidPage(
     htmlOutput("naslov"),
     htmlOutput("cena"),
     htmlOutput("krajodhoda"),
-    htmlOutput("ponudnik")
+    htmlOutput("ponudnik"),
+    htmlOutput("povezava")
   ),
   mainPanel(
-    tableOutput("mozni.leti"),
-    tableOutput("krneki"),
-    textOutput("link")
+    tableOutput("mozni.leti")
   )))

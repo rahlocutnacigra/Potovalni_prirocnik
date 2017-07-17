@@ -20,7 +20,7 @@ delete_table <- function(){
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS slo_mesta_koordinate"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS leti"))
     dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS letalisca_koordinate"))
-    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS url"))
+    dbSendQuery(conn,build_sql("DROP TABLE IF EXISTS url_tabela"))
     
     
   }, finally = {
@@ -77,10 +77,6 @@ create_table <- function(){
 
 #Uvoz podatkov:
 slo_mesta_koordinate<-read.csv2("Koordinate-SLO.csv",fileEncoding = "Windows-1250", sep=",")
-#glasbeniki <-read.csv("Podatki/glasbeniki.csv",fileEncoding = "Windows-1252")
-#pesmi <-read.csv("Podatki/pesmi.csv",fileEncoding = "Windows-1252")
-#ranks <-read.csv("Podatki/ranks.csv",fileEncoding = "Windows-1252")
-#billboard <- read.csv("Podatki/lestvica.csv",fileEncoding = "Windows-1252")
 
 #Funcija, ki vstavi podatke
 insert_data <- function(){
@@ -99,17 +95,6 @@ insert_data <- function(){
   })
 }
 
-add_primary <- function(){
-  tryCatch({
-    conn <- dbConnect(drv, dbname = db, host = host,
-                      user = user, password = password)
-    dbSendQuery(conn,build_sql("ALTER TABLE slo_mesta_koordiante ADD COLUMN id SERIAL PRIMARY KEY"))
-    
-  }, finally = {
-    dbDisconnect(conn) 
-    
-  })
-}
 
 pravice <- function() {
   tryCatch({
@@ -139,6 +124,5 @@ pravice <- function() {
 delete_table()
 create_table()
 insert_data()
-add_primary()
 pravice()
 con <- src_postgres(dbname = db, host = host, user = user, password = password)

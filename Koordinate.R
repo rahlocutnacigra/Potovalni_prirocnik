@@ -7,11 +7,11 @@ source("leti.R")
 ##naredi tabelo, ki slovenskim mestom doda stolpca s koordinatami
 
 # Uporabimo funkcijo getGeoCode iz knjižnice RgoogleMaps
-address <- mesta
-locations <- ldply(address, function(x) getGeoCode(paste(x, "Slovenia")))
-locations$V5<-mesta
-names(locations) <- c("lat","lon","kraj")
-kraji_geo <- data.frame(locations$kraj,locations$lat,locations$lon)
+# address <- mesta
+# locations <- ldply(address, function(x) getGeoCode(paste(x, "Slovenia")))
+# locations$V5<-mesta
+# names(locations) <- c("lat","lon","kraj")
+# kraji_geo <- data.frame(locations$kraj,locations$lat,locations$lon)
 
 #write.csv(kraji_geo,"Koordinate-SLO.csv",row.names=FALSE)
 

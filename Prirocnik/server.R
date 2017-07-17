@@ -14,6 +14,7 @@ shinyServer(function(input,output){
   conn <- src_postgres(dbname = db, host = host,
                        user = user, password = password)
   letalisca <- (tbl(conn, "letalisca_koordinate"))
+  url_tabela <- (tbl(conn, "url_tabela"))
   leti <-(tbl(conn, "leti"))
   slo_mesta <-(tbl(conn, "slo_mesta_koordinate"))
   mesta <- slo_mesta %>% select(mesto) %>% data.frame()
@@ -28,8 +29,8 @@ shinyServer(function(input,output){
   dobi_omejitve<-function(kraj,km){
     a<-slo_mesta %>% filter(mesto == kraj) %>% data.frame()
     lat<-c(a$sirina + pretvornik(km)[1],a$sirina - pretvornik(km)[1])
-    # lon<-c(a$dolzina + pretvornik(km)[2],a$dolzina - pretvornik(km)[2])
-    c(lat)
+    lon<-c(a$dolzina + pretvornik(km)[2],a$dolzina - pretvornik(km)[2])
+    c(lat, lon)
   }
   primerna_letalisca<-function(kraj,km){
     b<-max(dobi_omejitve(kraj,km)[1],dobi_omejitve(kraj,km)[2])
@@ -53,15 +54,21 @@ shinyServer(function(input,output){
     a<-poisci_let(kraj,km,destinacija)
     b<-filter(a,cena==min(a$cena))
   }
+  poisci.povezavo<-function(kraj, km, destinacija){
+    a<-najugodnejsi.let(kraj, km, destinacija)$ponudnik[1]
+    b<-filter(data.frame(url_tabela), prevoznik==a)$url
+  }
+  
   output$mozni.leti<-renderTable({poisci_let(input$odhod, input$kilometri, input$destinacija)})
   
   output$naslov<-renderUI({HTML("<b> <body bgcolor='#cce6ff'> <h3> <font color='#660033'> Najcenejši let: </font> </h3> </body> </b>")})
   output$cena<-renderUI({HTML(paste0("<b>Cena:  </b>", najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)$cena[1]," €"))})
   output$krajodhoda<-renderUI({HTML(paste0("<b>Kraj odhoda:  </b>", najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)$odhod[1]))})
   output$ponudnik<-renderUI({HTML(paste0("<b>Ponudnik:  </b>", najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)$ponudnik[1]))})
-  
-  output$krneki<-renderTable({najugodnejsi.let(input$odhod, input$kilometri, input$destinacija)})
-  output$link <-renderText({"http://www.edreams.com/offers/flights"})
+  output$povezava<-renderUI({HTML(paste0("<b>Povezava do ponudnika: </b> <a href='", 
+                                         poisci.povezavo(input$odhod, input$kilometri, input$destinacija), 
+                                         "'>",poisci.povezavo(input$odhod, input$kilometri, input$destinacija), "</a>"))})
+
 })
 
 

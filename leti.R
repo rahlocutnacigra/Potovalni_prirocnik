@@ -42,7 +42,6 @@ naslovi<-c("http://www.edreams.com/offers/flights/airline/FR/ryanair/",
            "http://www.edreams.com/offers/flights/airline/TP/tap-portugal/",
            "http://www.edreams.com/offers/flights/airline/AB/air-berlin/",
            "http://www.edreams.com/offers/flights/airline/0B/blue-air/",
-           "http://www.edreams.com/offers/flights/airline/KL/klm-royal-dutch-airlines/",
            "http://www.edreams.com/offers/flights/airline/HV/transavia-airlines/",
            "http://www.edreams.com/offers/flights/airline/SN/brussels-airlines/",
            "http://www.edreams.com/offers/flights/airline/LX/swiss-international-air-lines/",
@@ -57,7 +56,6 @@ naslovi<-c("http://www.edreams.com/offers/flights/airline/FR/ryanair/",
            "http://www.edreams.com/offers/flights/airline/WW/wowair/",
            "http://www.edreams.com/offers/flights/airline/ZB/monarch-airlines/",
            "http://www.edreams.com/offers/flights/airline/QR/qatar-airways/",
-           "http://www.edreams.com/offers/flights/airline/V7/volotea/",
            "http://www.edreams.com/offers/flights/airline/JP/adria-airways/",
            "http://www.edreams.com/offers/flights/airline/OA/olympic-air/",
            "http://www.edreams.com/offers/flights/airline/TU/tunisair/",
@@ -100,7 +98,7 @@ for (i in naslovi){
   razdeli<- strsplit(i, split = "/")
   n<-length(razdeli[[1]])
   prevoznik<-razdeli[[1]][n]
-  link1<-paste(prevoznik,"!",i)
+  link1<-paste0(prevoznik,"!",i)
   link<-c(link,link1)
 }
 linki<-link %>% strapplyc("^(.*)!(.*)") %>% data.frame() %>% t()
