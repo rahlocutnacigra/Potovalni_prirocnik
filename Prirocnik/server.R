@@ -18,6 +18,7 @@ shinyServer(function(input,output){
   leti <-(tbl(conn, "leti"))
   slo_mesta <-(tbl(conn, "slo_mesta_koordinate"))
   mesta <- slo_mesta %>% select(mesto) %>% data.frame()
+  ###tabela_test<-dbGetQuery(conn, "SELECT a.*, b.ponudnik FROM leti a, url_tabela b where a.prevoznik=b.ponudnik"))
   Encoding(mesta$mesto) <- "UTF-8"
   output$mesto<-renderUI({selectInput(inputId="odhod", label = "od kje boste potovali?",mesta$mesto)})
   
