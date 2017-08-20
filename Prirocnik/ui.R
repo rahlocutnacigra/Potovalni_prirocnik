@@ -35,6 +35,6 @@ shinyUI(fluidPage(
   ),
   #
   mainPanel(
-    tableOutput("dsub"))
+    DT::dataTableOutput("dsub"))
   
   ))
